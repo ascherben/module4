@@ -1,0 +1,7 @@
+Set 1: intercept = 3.000091 slope = 0.500091 R-squared = 0.6665 SE = 0.1179 t = 4.2415 p = 0.0022 F = 17.9899 Adjusted R-squared = 0.6295
+Set 2: intercept = 3.000909 slope = 0.500000 R-squared = 0.6662 SE = 0.1180 t = 4.2386 p = 0.0022 F = 17.9656 Adjusted R-squared = 0.6292
+Set 3: intercept = 3.002455 slope = 0.499727 R-squared = 0.6663 SE = 0.1179 t = 4.2394 p = 0.0022 F = 17.9723 Adjusted R-squared = 0.6292
+Set 4: intercept = 3.001727 slope = 0.499909 R-squared = 0.6667 SE = 0.1178 t = 4.2430 p = 0.0022 F = 18.0033 Adjusted R-squared = 0.6297
+
+Execution Time: 6.6583e-05 seconds
+Memory: 4 KB
