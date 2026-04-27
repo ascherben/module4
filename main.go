@@ -1,3 +1,5 @@
+// This program validates the montanaflynn/stats Go package by performing
+// linear regression and comparing results to Python and R
 package main
 
 import (
@@ -10,6 +12,7 @@ import (
 	"gonum.org/v1/gonum/stat/distuv"
 )
 
+// Anscombe's quartet data points
 var c1 = []stats.Coordinate{
 	{X: 10, Y: 8.04},
 	{X: 8, Y: 6.95},
@@ -66,6 +69,7 @@ var c4 = []stats.Coordinate{
 	{X: 8, Y: 6.89},
 }
 
+// Coeff calculates the slope and intercept
 func Coeff(points []stats.Coordinate) (float64, float64) {
 	r, _ := stats.LinearRegression(points)
 
@@ -87,15 +91,16 @@ func Coeff(points []stats.Coordinate) (float64, float64) {
 	return intercept, slope
 }
 
+// regression performs linear regression and calculates statistics
 func regression(name string, points []stats.Coordinate) {
 	intercept, slope := Coeff(points)
-
+	// calculate R-squared
 	var sumY float64
 	for _, p := range points {
 		sumY += p.Y
 	}
 	meanY := sumY / float64(len(points))
-
+	// calculate RSS and TSS
 	var rss, sst float64
 	for _, p := range points {
 		predicted := intercept + slope*p.X
@@ -114,24 +119,29 @@ func regression(name string, points []stats.Coordinate) {
 		sumSqDiffX += (p.X - meanX) * (p.X - meanX)
 	}
 	mse := rss / float64(len(points)-2)
+	// standard error
 	se := math.Sqrt(mse / sumSqDiffX)
+	// t-statistic
 	tStat := slope / se
-
+	// p-value and F-statistic
 	df := float64(len(points) - 2)
 	tDist := distuv.StudentsT{Mu: 0, Sigma: 1, Nu: df}
 	pValue := 2 * (1 - tDist.CDF(math.Abs(tStat)))
-
 	fStat := ((sst - rss) / 1) / (rss / float64(len(points)-2))
+	// adjusted R-squared
 	n := float64(len(points))
 	ar := 1 - ((1 - r2) * (n - 1) / (n - 2))
-
+	// print results
 	fmt.Printf("%s: intercept = %.6f slope = %.6f R-squared = %.4f SE = %.4f t = %.4f p = %.4f F = %.4f Adjusted R-squared = %.4f\n", name, intercept, slope, r2, se, tStat, pValue, fStat, ar)
 }
 
+// execute the regression analysis
+// measure execution time and memory usage
 func main() {
 
 	var ms, me runtime.MemStats
-	runtime.GC()
+	runtime.GC() // force garbage collection
+	// start memory and time measurement
 	runtime.ReadMemStats(&ms)
 	start := time.Now()
 
@@ -140,9 +150,10 @@ func main() {
 	regression("Set 3", c3)
 	regression("Set 4", c4)
 
+	// end time and memory measurement
 	elapsed := time.Since(start)
-
 	runtime.ReadMemStats(&me)
+	// print results
 	fmt.Printf("\nExecution Time: %v seconds\n", elapsed.Seconds())
 	fmt.Printf("Memory: %v KB\n", (me.Alloc-ms.Alloc)/1024)
 
