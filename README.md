@@ -72,7 +72,7 @@ Use Go for backend, deployment, and performance-sensitive statistical utilities,
 - `miller-mtpa-chapter-1-program.py` - Python Program
 - `miller-mtpa-chapter-1-program.R` - R Program
 - `README.md` 
-- `results`- Results output from the program 
+- `results` - Results output from the program 
     - `go_results.txt` - Output for Go with runtime
     - `python_results.txt` - Output for Python with runtime
     - `r_results.txt` - Output for R with runtime
@@ -123,8 +123,8 @@ go test
 go test -bench=. -benchmem 
 ```
 
-### Creating the files with result 
-(this does not put them in folders ) 
+### Creating the Results Files 
+(Note: this does not put them in folders) 
 
 ```
 go run main.go > go_results.txt
@@ -132,7 +132,15 @@ python miller-mtpa-chapter-1-program.py > python_results.txt
 Rscript miller-mtpa-chapter-1-program.R > r_results.txt
 ```
 
-### AI Disclosure 
+### AI Disclosure and Sources 
+
+#### Sources
+
+- Anscombe, F. J. 1973, February. "Graphs in Statistical Analysis." The American Statistician 27(1): 17–21. Available online at https://www.sjsu.edu/faculty/gerstman/StatPrimer/anscombe1973.pdf
+- Miller, Thomas W. 2015. Modeling Techniques in Predictive Analytics with Python and R: A Guide to Data Science. Upper Saddle River, NJ: Pearson Education. [ISBN-13: 978-0-13-389206-2] Chapter 1 Analytics and Data Science, pages 1–32, includes discussion and analysis of The Anscombe Quartet. Python and R programs available at https://github.com/mtpa/mtpa/tree/master/MTPA_Chapter_1
+- montanaflynn/stats: https://github.com/montanaflynn/stats
+
+#### AI
 
 This project used GenAI as a supplemental tool for README refinement, code review, debugging support, and clarification of Go tooling and syntax. 
 
