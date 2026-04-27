@@ -94,12 +94,15 @@ func Coeff(points []stats.Coordinate) (float64, float64) {
 // regression performs linear regression and calculates statistics
 func regression(name string, points []stats.Coordinate) {
 	intercept, slope := Coeff(points)
-	// calculate R-squared
-	var sumY float64
+	// calculate means
+	var sumY, sumX float64
 	for _, p := range points {
 		sumY += p.Y
+		sumX += p.X
 	}
 	meanY := sumY / float64(len(points))
+	meanX := sumX / float64(len(points))
+
 	// calculate RSS and TSS
 	var rss, sst float64
 	for _, p := range points {
@@ -107,30 +110,32 @@ func regression(name string, points []stats.Coordinate) {
 		rss += (p.Y - predicted) * (p.Y - predicted)
 		sst += (p.Y - meanY) * (p.Y - meanY)
 	}
+	// R-squared
 	r2 := 1.0 - (rss / sst)
 
-	var sumX float64
-	for _, p := range points {
-		sumX += p.X
-	}
-	meanX := sumX / float64(len(points))
+	// sum of squared differences
 	var sumSqDiffX float64
 	for _, p := range points {
 		sumSqDiffX += (p.X - meanX) * (p.X - meanX)
 	}
 	mse := rss / float64(len(points)-2)
+
 	// standard error
 	se := math.Sqrt(mse / sumSqDiffX)
+
 	// t-statistic
 	tStat := slope / se
+
 	// p-value and F-statistic
 	df := float64(len(points) - 2)
 	tDist := distuv.StudentsT{Mu: 0, Sigma: 1, Nu: df}
 	pValue := 2 * (1 - tDist.CDF(math.Abs(tStat)))
 	fStat := ((sst - rss) / 1) / (rss / float64(len(points)-2))
+
 	// adjusted R-squared
 	n := float64(len(points))
 	ar := 1 - ((1 - r2) * (n - 1) / (n - 2))
+
 	// print results
 	fmt.Printf("%s: intercept = %.6f slope = %.6f R-squared = %.4f SE = %.4f t = %.4f p = %.4f F = %.4f Adjusted R-squared = %.4f\n", name, intercept, slope, r2, se, tStat, pValue, fStat, ar)
 }

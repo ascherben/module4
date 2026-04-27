@@ -51,6 +51,12 @@ Batch execution benchmarks revealed the following performance differences:
 
 Go executed significantly faster than both Python and R. Memory measurements are approximate because Go, Python, and R report memory differently. Go reported the lowest memory use in this small test, but the results should be interpreted as general indicators rather than exact one-to-one comparisons.
 
+#### Go Benchmark Results
+
+The Go benchmark shows extremely fast execution:
+
+`BenchmarkCoefficients-12    2486205    470.3 ns/op    1792 B/op    12 allocs/op`
+
 ### Recommendation 
 
 Based on these results, Go is capable of producing correct statistical outputs and offers strong performance advantages. However, data scientists may have concerns about the limited statistical libraries compared to Python and R. Go provides accurate results with currently available packages, but programmers may encounter gaps in specialized statistical methods, visualization tools, and community support. 
@@ -148,3 +154,4 @@ This project used GenAI as a supplemental tool for README refinement, code revie
 **Notes on AI**
 
 It was helpful for building understanding but often suggested more complicated versions. 
+
